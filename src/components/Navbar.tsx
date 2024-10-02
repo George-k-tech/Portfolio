@@ -14,6 +14,11 @@ import {
 import MenuIcon from "@mui/icons-material/Menu";
 import Link from "next/link";
 import Cover from "./Cover";
+import GitHubIcon from "@mui/icons-material/GitHub";
+import EmailIcon from "@mui/icons-material/Email";
+import LinkedInIcon from "@mui/icons-material/LinkedIn";
+import Image from "next/image";
+import theme from "@/app/theme";
 
 interface THamburgerMenuProps {
   handleDrawerOpen: () => void;
@@ -22,10 +27,30 @@ interface THamburgerMenuProps {
 const menuItems = (
   <>
     {["services", "works", "notes", "contacts"].map((item) => (
-      <Typography key={item} component={Link} href={`/${item}`}>
+      <Typography
+        key={item}
+        component={Link}
+        href={`/${item}`}
+        sx={{
+          color: theme.palette.text.primary,
+        }}
+      >
         {item.charAt(0).toUpperCase() + item.slice(1)}
       </Typography>
     ))}
+  </>
+);
+
+const menuIcons = (
+  <>
+    <LinkedInIcon
+      sx={{
+        color: "#0A66C2",
+      }}
+    />
+    <Image src="/images/gitlab.svg" alt="gitlab" width={24} height={24} />
+    <GitHubIcon sx={{ color: "#181717" }} />
+    <EmailIcon sx={{ color: "#0072C6" }} />
   </>
 );
 
@@ -65,7 +90,7 @@ export default function Navbar() {
           <Typography
             component={Link}
             href="/home"
-            variant="h3"
+            variant="h4"
             sx={{
               color: theme.palette.text.primary,
             }}
@@ -83,7 +108,7 @@ export default function Navbar() {
           {!isMobile && (
             <Stack
               direction="row"
-              gap={20}
+              gap={5}
               alignItems="center"
               sx={{
                 "& a:hover": {
@@ -95,26 +120,31 @@ export default function Navbar() {
               {menuItems}
             </Stack>
           )}
+          {!isMobile && (
+            <Stack direction="row" gap={3}>
+              {menuIcons}
+            </Stack>
+          )}
 
           {isMobile && <HamburgerMenu handleDrawerOpen={handleDrawerOpen} />}
         </Stack>
       </Box>
 
       {isMobile && (
-        <Drawer anchor="right" open={open} onClose={handleDrawerClose}>
+        <Drawer anchor="right" open={open} onClose={handleDrawerClose} sx={{
+          "& .MuiDrawer-paper": {
+            backgroundColor: "#525359",
+          },
+        }}>
           <List>
             <ListItem sx={{ width: 300 }}>
-              <Stack
-                direction="column"
-                gap={2}
-                sx={{
-                  "& a:hover": {
-                    color: "#FFFFF7",
-                    transition: "ease-in-out 0.6s",
-                  },
-                }}
-              >
+              <Stack direction="column" gap={2} sx={{}}>
                 {menuItems}
+              </Stack>
+            </ListItem>
+            <ListItem>
+              <Stack direction="column" gap={3}>
+                {menuIcons}
               </Stack>
             </ListItem>
           </List>
