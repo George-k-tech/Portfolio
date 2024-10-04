@@ -1,25 +1,9 @@
 "use client";
-import { useState } from "react";
-import {
-  Box,
-  Stack,
-  Typography,
-  Drawer,
-  IconButton,
-  List,
-  ListItem,
-  useTheme,
-  useMediaQuery,
-} from "@mui/material";
-import MenuIcon from "@mui/icons-material/Menu";
+import { Box, Stack, Typography, useTheme, useMediaQuery } from "@mui/material";
 import Link from "next/link";
 import Cover from "./Cover";
 import theme from "@/app/theme";
 import AnimatedIcons from "./AnimatedIcons";
-
-interface THamburgerMenuProps {
-  handleDrawerOpen: () => void;
-}
 
 const menuItems = (
   <>
@@ -37,32 +21,21 @@ const menuItems = (
     ))}
   </>
 );
-
-const HamburgerMenu = ({ handleDrawerOpen }: THamburgerMenuProps) => (
-  <IconButton
-    sx={{ display: { md: "block", lg: "none" } }}
-    onClick={handleDrawerOpen}
-  >
-    <MenuIcon />
-  </IconButton>
-);
-
 export default function Navbar() {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("lg"));
-  const [open, setOpen] = useState(false);
-
-  const handleDrawerOpen = () => setOpen(true);
-  const handleDrawerClose = () => setOpen(false);
 
   return (
     <Cover>
       <Box
         sx={{
-          padding: "20px 0px",
           "& a": {
             textDecoration: "none",
           },
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "center",
+          alignItems: "center",
         }}
       >
         <Stack
@@ -81,16 +54,13 @@ export default function Navbar() {
             sx={{
               color: theme.palette.text.primary,
               width: isMobile ? "100%" : "33%",
+              textAlign: isMobile ? "center" : "left",
+              "&:hover": {
+                color: theme.palette.text.secondary,
+              },
             }}
           >
-            George{" "}
-            <span
-              style={{
-                color: theme.palette.text.disabled,
-              }}
-            >
-              Mungai
-            </span>
+            George Mungai
           </Typography>
 
           {!isMobile && (
@@ -101,15 +71,23 @@ export default function Navbar() {
               sx={{
                 "& a": {
                   position: "relative",
+                  display: "inline-flex", 
+                  alignItems: "center", 
                   "&::before": {
-                    content: "' < '",
+                    content: "'<'",
+                    display: "inline-block",
+                    marginRight: "5px",
                     color: "transparent",
                     transition: "color 0.2s ease-in-out",
+                    verticalAlign: "middle", 
                   },
                   "&::after": {
-                    content: "' > '",
+                    content: "'>'",
+                    display: "inline-block",
+                    marginLeft: "5px", 
                     color: "transparent",
                     transition: "color 0.2s ease-in-out",
+                    verticalAlign: "middle",
                   },
                 },
                 "& a:hover": {
@@ -137,36 +115,8 @@ export default function Navbar() {
               <AnimatedIcons />
             </Stack>
           )}
-
-          {isMobile && <HamburgerMenu handleDrawerOpen={handleDrawerOpen} />}
         </Stack>
       </Box>
-
-      {isMobile && (
-        <Drawer
-          anchor="right"
-          open={open}
-          onClose={handleDrawerClose}
-          sx={{
-            "& .MuiDrawer-paper": {
-              backgroundColor: "#525359",
-            },
-          }}
-        >
-          <List>
-            <ListItem sx={{ width: 300 }}>
-              <Stack direction="column" gap={2} sx={{}}>
-                {menuItems}
-              </Stack>
-            </ListItem>
-            <ListItem>
-              <Stack direction="column" gap={3}>
-                <AnimatedIcons />
-              </Stack>
-            </ListItem>
-          </List>
-        </Drawer>
-      )}
     </Cover>
   );
 }
