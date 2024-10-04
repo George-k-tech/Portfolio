@@ -111,9 +111,27 @@ export default function Navbar() {
               gap={5}
               alignItems="center"
               sx={{
+                "& a": {
+                  position: "relative",
+                  "&::before": {
+                    content: "' < '",
+                    color: "transparent",
+                    transition: "color 0.2s ease-in-out",
+                  },
+                  "&::after": {
+                    content: "' > '",
+                    color: "transparent",
+                    transition: "color 0.2s ease-in-out",
+                  },
+                },
                 "& a:hover": {
-                  textDecoration: "underline",
-                  transition: "ease-in-out 0.2s",
+                  color: theme.palette.text.secondary,
+                  "&::before": {
+                    color: theme.palette.text.secondary,
+                  },
+                  "&::after": {
+                    color: theme.palette.text.secondary,
+                  },
                 },
               }}
             >
@@ -131,11 +149,16 @@ export default function Navbar() {
       </Box>
 
       {isMobile && (
-        <Drawer anchor="right" open={open} onClose={handleDrawerClose} sx={{
-          "& .MuiDrawer-paper": {
-            backgroundColor: "#525359",
-          },
-        }}>
+        <Drawer
+          anchor="right"
+          open={open}
+          onClose={handleDrawerClose}
+          sx={{
+            "& .MuiDrawer-paper": {
+              backgroundColor: "#525359",
+            },
+          }}
+        >
           <List>
             <ListItem sx={{ width: 300 }}>
               <Stack direction="column" gap={2} sx={{}}>
