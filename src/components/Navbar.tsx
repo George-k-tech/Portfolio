@@ -14,11 +14,8 @@ import {
 import MenuIcon from "@mui/icons-material/Menu";
 import Link from "next/link";
 import Cover from "./Cover";
-import GitHubIcon from "@mui/icons-material/GitHub";
-import EmailIcon from "@mui/icons-material/Email";
-import LinkedInIcon from "@mui/icons-material/LinkedIn";
-import Image from "next/image";
 import theme from "@/app/theme";
+import AnimatedIcons from "./AnimatedIcons";
 
 interface THamburgerMenuProps {
   handleDrawerOpen: () => void;
@@ -38,19 +35,6 @@ const menuItems = (
         {item.charAt(0).toUpperCase() + item.slice(1)}
       </Typography>
     ))}
-  </>
-);
-
-const menuIcons = (
-  <>
-    <LinkedInIcon
-      sx={{
-        color: "#0A66C2",
-      }}
-    />
-    <Image src="/images/gitlab.svg" alt="gitlab" width={24} height={24} />
-    <GitHubIcon sx={{ color: "#181717" }} />
-    <EmailIcon sx={{ color: "#0072C6" }} />
   </>
 );
 
@@ -85,7 +69,10 @@ export default function Navbar() {
           direction="row"
           justifyContent="space-between"
           alignItems="center"
-          sx={{ padding: "8px 0" }}
+          sx={{
+            padding: "8px 0",
+            width: "100%",
+          }}
         >
           <Typography
             component={Link}
@@ -93,6 +80,7 @@ export default function Navbar() {
             variant="h4"
             sx={{
               color: theme.palette.text.primary,
+              width: isMobile ? "100%" : "33%",
             }}
           >
             George{" "}
@@ -133,14 +121,20 @@ export default function Navbar() {
                     color: theme.palette.text.secondary,
                   },
                 },
+                width: "33%",
               }}
             >
               {menuItems}
             </Stack>
           )}
           {!isMobile && (
-            <Stack direction="row" gap={3}>
-              {menuIcons}
+            <Stack
+              direction="row"
+              sx={{
+                width: "33%",
+              }}
+            >
+              <AnimatedIcons />
             </Stack>
           )}
 
@@ -167,7 +161,7 @@ export default function Navbar() {
             </ListItem>
             <ListItem>
               <Stack direction="column" gap={3}>
-                {menuIcons}
+                <AnimatedIcons />
               </Stack>
             </ListItem>
           </List>
